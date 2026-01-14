@@ -1,0 +1,131 @@
+{
+  "info": {
+    "_postman_id": "paynl-payment-api",
+    "name": "PayNL Payment API",
+    "description": "PayNL Payment API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 100.50,\n  \"description\": \"Test payment for order #12345\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/api/payment/create",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["api", "payment", "create"]
+        },
+        "description": "Create a new payment and get the payment URL to redirect the user"
+      },
+      "response": []
+    },
+    {
+      "name": "Check Payment Status",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost/api/payment/status?order_id=12345678",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["api", "payment", "status"],
+          "query": [
+            {
+              "key": "order_id",
+              "value": "12345678"
+            }
+          ]
+        },
+        "description": "Check the status of a payment by order ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Payment Callback (from PayNL redirect)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost/api/payment/callback?orderid=12345678",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["api", "payment", "callback"],
+          "query": [
+            {
+              "key": "orderid",
+              "value": "12345678"
+            }
+          ]
+        },
+        "description": "Handle the callback from PayNL after user returns from payment page. This is automatically called by PayNL, not manually."
+      },
+      "response": []
+    },
+    {
+      "name": "Payment Webhook (from PayNL server)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "orderid",
+              "value": "12345678"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost/api/payment/webhook",
+          "protocol": "http",
+          "host": ["localhost"],
+          "path": ["api", "payment", "webhook"]
+        },
+        "description": "Handle webhook from PayNL server. This is automatically sent by PayNL, not manually called."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost",
+      "type": "string"
+    },
+    {
+      "key": "order_id",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
