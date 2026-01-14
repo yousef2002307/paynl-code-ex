@@ -89,6 +89,7 @@ class PaymentController extends Controller
             // Status: 100 = Approved, 90 = Pending, 80 = Cancelled, 70 = Denied, etc.
             if ($status == 100) {
                 session()->forget('paynl_order_id');
+           //     \App\Models\User::factory()->create(); // Example action on successful payment
                 return redirect()->route('payment.create')->with('success', 'Payment successful! Order ID: ' . $orderId);
             } elseif ($status == 90) {
                 return redirect()->route('payment.create')->with('warning', 'Payment pending');
